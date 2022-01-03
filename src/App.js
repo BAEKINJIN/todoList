@@ -65,8 +65,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        <h1>안녕하세요.!</h1>
-        <p>원격저장소가 생겼습니다.!</p>
+        <div>안녕하세요! 즐거운 Git!!</div>
       </div>
       <GlobalStyle />
       <TodoTemplate>

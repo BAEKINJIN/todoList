@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { useState } from "react";
+import React, { useState } from "react";
 import { MdAdd } from "react-icons/md";
 const CircleButton = styled.button`
     background: #38d9a9;
@@ -62,7 +62,7 @@ const Input = styled.input`
         font-size: 18px;
         box-sizing: border-box;
 `;
-export default function TodoInsert({onChange, onCreatelist, desc}) {
+function TodoInsert({onChange, onCreatelist, desc}) {
     const [open, setOpen] = useState(false);
     function onToggle() {
         setOpen(!open);
@@ -78,3 +78,5 @@ export default function TodoInsert({onChange, onCreatelist, desc}) {
         </div>
     );
 }
+
+export default React.memo(TodoInsert);

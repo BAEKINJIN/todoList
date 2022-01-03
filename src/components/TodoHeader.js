@@ -1,3 +1,4 @@
+import React, { useMemo } from "react";
 import styled from "styled-components";
 const TodoHeaderBlock = styled.div`
     padding: 48px 32px 24px;
@@ -19,8 +20,13 @@ const TodoHeaderBlock = styled.div`
         font-weight: bold;
     }
 `;
-export default function TodoHeader({todoList}) {
-    const undoneTasks = todoList.filter(todo => !todo.idDone);
+function TodoHeader({todoList}) {
+    function countTodo(todoList) {
+        console.log('할일을 세는중...');
+        return todoList.filter(todo => !todo.idDone);
+    }
+    const undoneTasks = useMemo(() => (countTodo(todoList)), [todoList]);
+    // const undoneTasks = todoList.filter(todo => !todo.idDone);
     // 날짜 구현
     const today = new Date();
     const dateString = today.toLocaleDateString('ko-KR', {
@@ -39,3 +45,5 @@ export default function TodoHeader({todoList}) {
         </TodoHeaderBlock>
     );
 }
+
+export default React.memo(TodoHeader);

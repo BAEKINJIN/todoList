@@ -3,7 +3,7 @@ import TodoTemplate from './components/TodoTemplate';
 import TodoHeader from './components/TodoHeader';
 import TodoList from './components/TodoList';
 import TodoInsert from './components/TodoInsert';
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -35,11 +35,19 @@ function App() {
   // 항목 id 관리
   const idNum = useRef(4);
 
-  function onChange(e) {
+  const onChange = useCallback((e) => {
     const inputValue = e.target.value;
     setDesc(inputValue);
-  }
-  function onCreatelist(e) {
+    console.log(desc);
+  }, [desc]);
+
+  // function onChange(e) {
+  //   const inputValue = e.target.value;
+  //   setDesc(inputValue);
+  //   console.log(desc);
+  // }
+
+  const onCreatelist = useCallback((e) => {
     e.preventDefault();
     // 새로운 객체 만들기
     const list = {
@@ -53,7 +61,24 @@ function App() {
     ])
     // idNum값을 1씩 추가하기
     idNum.current = idNum.current + 1;
-  }
+  }, [todoList, desc, idNum]);
+
+  // function onCreatelist(e) {
+  //   e.preventDefault();
+  //   // 새로운 객체 만들기
+  //   const list = {
+  //     id: idNum.current,
+  //     text: desc,
+  //     idDone: false
+  //   }
+  //   // todoList배열 업데이트(새로운 객체 추가하기)
+  //   setTodoList([
+  //     ...todoList,list
+  //   ])
+  //   // idNum값을 1씩 추가하기
+  //   idNum.current = idNum.current + 1;
+  // }
+
   // 해당 id항목 삭제하기
   function onRemove(id) {
     setTodoList(todoList.filter(todo => todo.id !== id));
@@ -64,9 +89,6 @@ function App() {
   }
   return (
     <div className="App">
-      <div>
-        <div>안녕하세요! 즐거운 Git!!</div>
-      </div>
       <GlobalStyle />
       <TodoTemplate>
         <TodoHeader todoList={todoList} />
